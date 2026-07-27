@@ -1,0 +1,34 @@
+# 环境变量（不追踪）
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Node
+node_modules/
+*.log
+
+# 数据库
+*.db
+*.sqlite
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+
+# 密钥/证书
+*.pem
+*.key
+*.crt
+
+# ComfyUI
+output/
+temp/

@@ -1,0 +1,22 @@
+{
+  "name": "pangu-ai-engine",
+  "version": "1.0.0",
+  "description": "盘古AI内容引擎 - 一站式AI内容工厂",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "node server/index.js",
+    "start": "node server/index.js",
+    "web": "cd web && npx serve -p 3000"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "sql.js": "^1.10.0",
+    "uuid": "^9.0.0",
+    "winston": "^3.19.0"
+  },
+  "author": "取经团队 · 唐僧 🙏",
+  "license": "MIT"
+}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>盘古AI内容引擎 — 一站式AI内容工厂</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 50:'#f0f5ff',100:'#e0ebff',200:'#b8d4fe',300:'#7cb4fc',400:'#398df8',500:'#0f6cff',600:'#0a4fd4',700:'#0c3cad',800:'#10338e',900:'#122d75' },
+            accent: { 50:'#fdf4ff',100:'#fae8ff',200:'#f5d0fe',300:'#f0abfc',400:'#e879f9',500:'#d946ef',600:'#c026d3',700:'#a21caf',800:'#86198f',900:'#701a75' }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 min-h-screen font-sans antialiased">
+
+  <!-- 侧边栏 -->
+  <aside id="sidebar" class="fixed left-0 top-0 h-full w-64 z-30 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 flex flex-col">
+    <div class="p-5 border-b border-gray-100">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-xl" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">🔮</div>
+        <div>
+          <h1 class="font-bold text-lg brand">盘古引擎</h1>
+          <p class="text-xs" style="color: var(--p-text-muted);">Pangu AI Engine</p>
+        </div>
+      </div>
+    </div>
+
+    <nav class="flex-1 p-3 space-y-0.5 overflow-y-auto" id="nav-menu">
+      <a href="#" data-page="home" class="nav-item active"><span class="nav-icon">🏠</span> 首页</a>
+      <a href="#" data-page="generate" class="nav-item"><span class="nav-icon">✍️</span> 智能生成</a>
+      <a href="#" data-page="multiplatform" class="nav-item"><span class="nav-icon">🔄</span> 一键多平台</a>
+      <a href="#" data-page="headline" class="nav-item"><span class="nav-icon">💥</span> 标题工厂</a>
+      <a href="#" data-page="calendar" class="nav-item"><span class="nav-icon">📅</span> 内容日历</a>
+      <a href="#" data-page="video" class="nav-item"><span class="nav-icon">🎬</span> 视频脚本</a>
+      <a href="#" data-page="live" class="nav-item"><span class="nav-icon">📡</span> 直播话术</a>
+      <a href="#" data-page="analyze" class="nav-item"><span class="nav-icon">🔍</span> 竞品分析</a>
+      <a href="#" data-page="image" class="nav-item"><span class="nav-icon">🎨</span> 配图生成</a>
+      <a href="#" data-page="history" class="nav-item"><span class="nav-icon">📋</span> 历史记录</a>
+    </nav>
+
+    <div class="p-3 border-t border-gray-100">
+      <div id="user-info" class="text-center">
+        <button onclick="showLogin()" class="p-btn p-btn-primary w-full">
+          🔑 登录 / 注册
+        </button>
+      </div>
+      <p class="text-center mt-2 text-xs" style="color: var(--p-text-muted);">© 取经团队 · 唐僧 🙏</p>
+    </div>
+  </aside>
+
+  <!-- 侧边栏遮罩（移动端） -->
+  <div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <!-- 主内容区 -->
+  <main class="lg:ml-64 min-h-screen">
+    <!-- 移动端菜单按钮 -->
+    <button id="menu-toggle" class="lg:hidden fixed top-4 left-4 z-40 p-2 bg-white rounded-lg shadow-md">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+
+    <!-- 顶部栏 -->
+    <header class="px-6 py-3 flex items-center justify-between sticky top-0 z-20">
+      <h2 id="page-title" class="text-xl font-bold">🏠 首页</h2>
+      <div class="flex items-center gap-3">
+        <span id="plan-badge" class="hidden p-badge p-badge-primary"></span>
+
+      </div>
+    </header>
+
+    <!-- 页面容器 -->
+    <div class="p-6">
+      <div id="page-content">
+        <!-- 动态渲染 -->
+      </div>
+    </div>
+  </main>
+
+  <!-- 底部导航栏（移动端） -->
+  <nav id="bottom-nav">
+    <a href="#" data-page="home" class="bn-item active"><span class="bn-icon">🏠</span>首页</a>
+    <a href="#" data-page="generate" class="bn-item"><span class="bn-icon">✍️</span>生成</a>
+    <a href="#" data-page="multiplatform" class="bn-item"><span class="bn-icon">🔄</span>多平台</a>
+    <a href="#" data-page="history" class="bn-item"><span class="bn-icon">📋</span>历史</a>
+    <a href="#" onclick="document.getElementById('sidebar').classList.toggle('show'); document.getElementById('sidebar-overlay').classList.toggle('show'); return false;" class="bn-item"><span class="bn-icon">☰</span>菜单</a>
+  </nav>
+
+  <!-- 登录弹窗 -->
+  <div id="login-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center" style="background: rgba(15,23,42,0.5); backdrop-filter: blur(4px);">
+    <div class="modal-card w-full max-w-md mx-4 animate-scale-in">
+      <div class="login-header">
+        <div class="text-4xl mb-2">🔮</div>
+        <h3 class="text-xl font-bold">盘古AI内容引擎</h3>
+        <p class="text-sm opacity-80 mt-1">登录后开启AI创作之旅</p>
+      </div>
+      <div id="login-form" class="p-6 space-y-3">
+        <input id="login-phone" class="p-input" placeholder="手机号" type="tel" autocomplete="tel">
+        <input id="login-password" class="p-input" placeholder="密码" type="password" autocomplete="current-password">
+        <button onclick="doLogin()" class="p-btn p-btn-primary p-btn-lg w-full">登录</button>
+        <button onclick="doRegister()" class="p-btn p-btn-ghost w-full text-sm">还没有账号？立即注册</button>
+      </div>
+      <div class="p-4 border-t border-gray-100 text-center">
+        <button onclick="hideLogin()" class="p-btn p-btn-ghost text-sm">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 结果弹窗 -->
+  <div id="result-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" style="background: rgba(15,23,42,0.5); backdrop-filter: blur(4px);">
+    <div class="modal-card w-full max-w-2xl animate-scale-in" style="background: white; border-radius: var(--p-radius-xl); box-shadow: var(--p-shadow-xl); overflow: hidden;">
+      <div class="flex items-center justify-between p-5 border-b border-gray-100">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">✨</span>
+          <h3 class="text-lg font-bold" style="color: var(--p-text);">生成结果</h3>
+        </div>
+        <button onclick="hideResult()" class="p-btn p-btn-ghost text-xl leading-none">&times;</button>
+      </div>
+      <div id="result-content" style="white-space: pre-wrap; line-height: 1.9; padding: 24px; min-height: 120px;"></div>
+      <div class="flex gap-2 p-4 border-t border-gray-100 bg-gray-50/50">
+        <button onclick="copyResult()" class="p-btn p-btn-secondary flex-1">📋 复制全文</button>
+        <button onclick="hideResult()" class="p-btn p-btn-primary flex-1">✅ 完成</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+
+</body>
+</html>
